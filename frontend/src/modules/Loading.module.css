@@ -1,0 +1,711 @@
+
+.loading {
+    width: 100%;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 16px;
+    background: #fafbf7;
+    border-radius: 20px;
+}
+
+/* =========================
+   MAIN SCENE
+========================= */
+
+.scene {
+    position: relative;
+    width: min(100%, 620px);
+    height: 270px;
+    overflow: hidden;
+    isolation: isolate;
+    border-radius: 18px;
+
+    background: linear-gradient(
+        180deg,
+        #82c9e9 0%,
+        #d6e9d4 75%,
+        #a6c58d 100%
+    );
+}
+
+/* =========================
+   NIGHT SKY
+========================= */
+
+.nightSky {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    background: linear-gradient(
+        180deg,
+        #101a3e 0%,
+        #283a62 55%,
+        #e58c72 100%
+    );
+
+    opacity: 0;
+    animation: nightTransition 18s linear infinite;
+}
+
+/* =========================
+   SUN
+========================= */
+
+.sun {
+    position: absolute;
+    z-index: 2;
+
+    width: 48px;
+    height: 48px;
+
+    left: 3%;
+    bottom: 38%;
+
+    border-radius: 50%;
+    background: #ffcb65;
+
+    box-shadow:
+        0 0 30px #ffcf77,
+        0 0 65px #ffd18b;
+
+    animation: sunSet 18s linear infinite;
+}
+
+/* =========================
+   MOON
+========================= */
+
+.moon {
+    position: absolute;
+    z-index: 3;
+
+    width: 43px;
+    height: 43px;
+
+    right: 12%;
+    top: 70%;
+
+    border-radius: 50%;
+    background: #fff5d6;
+
+    box-shadow: 0 0 30px #fff4c4;
+
+    opacity: 0;
+
+    animation: moonRise 18s linear infinite;
+}
+
+.craterOne,
+.craterTwo {
+    position: absolute;
+    background: #e8dfc6;
+    border-radius: 50%;
+}
+
+.craterOne {
+    width: 9px;
+    height: 9px;
+    top: 10px;
+    left: 10px;
+}
+
+.craterTwo {
+    width: 6px;
+    height: 6px;
+    bottom: 9px;
+    right: 10px;
+}
+
+/* =========================
+   STARS
+========================= */
+
+.stars {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+
+    opacity: 0;
+    animation: starsAppear 18s linear infinite;
+}
+
+.star {
+    position: absolute;
+    color: #fff4ce;
+    font-size: 12px;
+
+    animation: twinkle 1.8s ease-in-out infinite alternate;
+}
+
+/* =========================
+   CLOUDS
+========================= */
+
+.cloud {
+    position: absolute;
+    z-index: 3;
+
+    width: 75px;
+    height: 24px;
+
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 30px;
+
+    animation: cloudMove 16s linear infinite;
+}
+
+.cloud::before,
+.cloud::after,
+.cloud span {
+    content: "";
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.cloud::before {
+    width: 32px;
+    height: 32px;
+    top: -15px;
+    left: 12px;
+}
+
+.cloud::after {
+    width: 25px;
+    height: 25px;
+    top: -10px;
+    right: 12px;
+}
+
+.cloud span {
+    width: 18px;
+    height: 18px;
+    top: -8px;
+    left: 35px;
+}
+
+.cloudOne {
+    top: 48px;
+    left: 15%;
+}
+
+.cloudTwo {
+    top: 85px;
+    left: 65%;
+    transform: scale(0.75);
+
+    animation-duration: 22s;
+    animation-direction: reverse;
+}
+
+/* =========================
+   BIRDS
+========================= */
+
+.birds {
+    position: absolute;
+    z-index: 4;
+
+    top: 85px;
+    left: -50px;
+
+    color: #354e57;
+    font-size: 22px;
+
+    animation: birdsFly 12s linear infinite;
+}
+
+/* =========================
+   MOUNTAINS
+========================= */
+
+.mountainBack {
+    position: absolute;
+    z-index: 4;
+
+    bottom: 55px;
+    width: 100%;
+    height: 120px;
+
+    background: #769c85;
+
+    clip-path: polygon(
+        0 100%,
+        15% 30%,
+        28% 75%,
+        45% 10%,
+        65% 75%,
+        80% 25%,
+        100% 100%
+    );
+}
+
+.mountainFront {
+    position: absolute;
+    z-index: 5;
+
+    bottom: 45px;
+    width: 100%;
+    height: 95px;
+
+    background: #557e66;
+
+    clip-path: polygon(
+        0 100%,
+        20% 40%,
+        38% 85%,
+        60% 25%,
+        78% 75%,
+        100% 35%,
+        100% 100%
+    );
+}
+
+/* =========================
+   FIELDS
+========================= */
+
+.field {
+    position: absolute;
+    z-index: 6;
+
+    bottom: 0;
+    width: 100%;
+    height: 105px;
+
+    background: #83a966;
+
+    clip-path: polygon(
+        0 25%,
+        100% 0,
+        100% 100%,
+        0 100%
+    );
+}
+
+.foreground {
+    position: absolute;
+    z-index: 8;
+
+    bottom: -25px;
+    left: -10%;
+
+    width: 120%;
+    height: 75px;
+
+    background: #648c50;
+    border-radius: 50% 50% 0 0;
+}
+
+/* =========================
+   VILLAGE HOUSES
+========================= */
+
+.house {
+    position: absolute;
+    z-index: 7;
+
+    bottom: 63px;
+
+    width: 75px;
+    height: 72px;
+}
+
+.houseOne {
+    left: 25%;
+    transform: scale(0.9);
+}
+
+.houseTwo {
+    left: 48%;
+    bottom: 72px;
+    transform: scale(1.1);
+}
+
+.houseThree {
+    right: 17%;
+    transform: scale(0.75);
+}
+
+.roof {
+    position: absolute;
+    top: 0;
+
+    width: 85px;
+    height: 33px;
+
+    background: #a85e43;
+
+    clip-path: polygon(
+        50% 0,
+        100% 100%,
+        0 100%
+    );
+}
+
+.houseBody {
+    position: absolute;
+    bottom: 0;
+    left: 7px;
+
+    width: 71px;
+    height: 45px;
+
+    background: #e6c18d;
+    border-radius: 3px;
+}
+
+.houseDoor {
+    position: absolute;
+    bottom: 0;
+    left: 27px;
+
+    width: 17px;
+    height: 29px;
+
+    background: #74513c;
+    border-radius: 8px 8px 0 0;
+}
+
+.houseWindow {
+    position: absolute;
+    top: 10px;
+    right: 8px;
+
+    width: 12px;
+    height: 12px;
+
+    background: #b7dfe0;
+    border: 2px solid #77553d;
+
+    animation: houseLights 18s linear infinite;
+}
+
+/* =========================
+   TREES
+========================= */
+
+.tree {
+    position: absolute;
+    z-index: 7;
+
+    bottom: 45px;
+    font-size: 36px;
+}
+
+.treeOne {
+    left: 8%;
+}
+
+.treeTwo {
+    right: 5%;
+    font-size: 32px;
+}
+
+/* =========================
+   TIME LABEL
+========================= */
+
+.timeLabel {
+    position: absolute;
+    z-index: 10;
+
+    top: 16px;
+    left: 18px;
+}
+
+.dayLabel {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 2px;
+
+    color: #315a4b;
+
+    animation: labelColor 18s linear infinite;
+}
+
+/* =========================
+   LOADING MESSAGE
+========================= */
+
+.messageContainer {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.message {
+    margin: 0;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    color: #315c43;
+
+    animation: messageAppear 0.5s ease;
+}
+
+.subMessage {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #8b968b;
+}
+
+/* =========================
+   DAY TO NIGHT ANIMATIONS
+========================= */
+
+/* Sky */
+
+@keyframes nightTransition {
+    0%, 35% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.35;
+    }
+
+    68% {
+        opacity: 0.85;
+    }
+
+    80%, 95% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Sun: travels across sky and sets */
+
+@keyframes sunSet {
+    0% {
+        left: 3%;
+        bottom: 38%;
+        opacity: 1;
+    }
+
+    20% {
+        left: 20%;
+        bottom: 58%;
+        opacity: 1;
+    }
+
+    40% {
+        left: 40%;
+        bottom: 72%;
+        opacity: 1;
+    }
+
+    50% {
+        left: 55%;
+        bottom: 70%;
+        opacity: 1;
+    }
+
+    60% {
+        left: 72%;
+        bottom: 48%;
+        opacity: 1;
+    }
+
+    68% {
+        left: 85%;
+        bottom: 15%;
+        opacity: 0;
+    }
+
+    100% {
+        left: 85%;
+        bottom: 15%;
+        opacity: 0;
+    }
+}
+
+/* Moon: starts only after sun disappears */
+
+@keyframes moonRise {
+    0%, 68% {
+        top: 70%;
+        opacity: 0;
+    }
+
+    78% {
+        top: 38%;
+        opacity: 0.8;
+    }
+
+    88%, 95% {
+        top: 12%;
+        opacity: 1;
+    }
+
+    100% {
+        top: 12%;
+        opacity: 0;
+    }
+}
+
+/* Stars */
+
+@keyframes starsAppear {
+    0%, 68% {
+        opacity: 0;
+    }
+
+    80%, 95% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes twinkle {
+    from {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Clouds */
+
+@keyframes cloudMove {
+    from {
+        margin-left: -30px;
+    }
+
+    to {
+        margin-left: 60px;
+    }
+}
+
+/* Birds */
+
+@keyframes birdsFly {
+    from {
+        left: -50px;
+    }
+
+    to {
+        left: 110%;
+    }
+}
+
+/* House lights */
+
+@keyframes houseLights {
+    0%, 68% {
+        background: #b7dfe0;
+        box-shadow: none;
+    }
+
+    80%, 95% {
+        background: #ffdc82;
+        box-shadow: 0 0 12px #ffdc82;
+    }
+
+    100% {
+        background: #b7dfe0;
+        box-shadow: none;
+    }
+}
+
+/* Label */
+
+@keyframes labelColor {
+    0%, 68% {
+        color: #315a4b;
+    }
+
+    80%, 95% {
+        color: #fff0c5;
+    }
+
+    100% {
+        color: #315a4b;
+    }
+}
+
+/* Message */
+
+@keyframes messageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(7px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 500px) {
+    .scene {
+        height: 220px;
+    }
+
+    .houseOne {
+        left: 15%;
+    }
+
+    .houseTwo {
+        left: 42%;
+    }
+
+    .houseThree {
+        right: 5%;
+    }
+
+    .message {
+        font-size: 14px;
+    }
+
+    .dayLabel {
+        font-size: 8px;
+    }
+}
+
+/* =========================
+   ACCESSIBILITY
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .scene *,
+    .scene *::before,
+    .scene *::after,
+    .message {
+        animation: none !important;
+    }
+
+    .nightSky {
+        opacity: 0;
+    }
+
+    .sun {
+        opacity: 1;
+    }
+
+    .moon,
+    .stars {
+        opacity: 0;
+    }
+}
+

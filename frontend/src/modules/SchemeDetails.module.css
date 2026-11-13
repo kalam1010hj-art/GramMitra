@@ -1,0 +1,697 @@
+/* ==============================
+   PAGE & CONTAINER
+================================ */
+
+.page {
+  min-height: 100vh;
+  background: #f7f9f7;
+  padding: 32px 20px 60px;
+  color: #17251d;
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* ==============================
+   BREADCRUMB
+================================ */
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 25px;
+  font-size: 13px;
+  color: #8b988f;
+}
+
+.breadcrumb a {
+  color: #63736a;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb a:hover {
+  color: #176b45;
+}
+
+.breadcrumb span:last-child {
+  color: #176b45;
+  font-weight: 600;
+}
+
+/* ==============================
+   HERO SECTION
+================================ */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 35px;
+  padding: 55px 58px;
+  border-radius: 24px;
+  background: linear-gradient(120deg, #103f2c, #176b45 65%, #238657);
+  color: white;
+  box-shadow: 0 12px 35px rgba(20, 83, 54, 0.12);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  right: 100px;
+  top: -220px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  right: -100px;
+  bottom: -220px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+}
+
+.badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.category,
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.category {
+  color: #e4f8eb;
+  background: rgba(255, 255, 255, 0.13);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.status {
+  color: #d1fae5;
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(167, 243, 208, 0.2);
+}
+
+.status span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.15);
+}
+
+.hero h1 {
+  max-width: 700px;
+  margin: 0 0 15px;
+  font-size: clamp(30px, 4vw, 43px);
+  line-height: 1.2;
+  letter-spacing: -1.3px;
+  font-weight: 750;
+}
+
+.heroContent > p {
+  max-width: 650px;
+  margin: 0;
+  color: #d6e9dc;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 13px;
+  margin-top: 30px;
+}
+
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px 20px;
+  border-radius: 9px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.primaryButton {
+  color: #155637;
+  background: white;
+}
+
+.primaryButton:hover {
+  background: #eaf8ef;
+  transform: translateY(-2px);
+}
+
+.secondaryButton {
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.secondaryButton:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
+}
+
+.heroIcon {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  width: 130px;
+  height: 130px;
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ==============================
+   CONTENT GRID
+================================ */
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 310px;
+  align-items: start;
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section {
+  padding: 28px;
+  border: 1px solid #e8eee9;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 3px 12px rgba(25, 55, 37, 0.025);
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.sectionIcon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  color: #18734a;
+  border-radius: 12px;
+  background: #eaf6ee;
+}
+
+.sectionHeading h2 {
+  margin: 0 0 5px;
+  color: #1c3024;
+  font-size: 17px;
+  font-weight: 750;
+  letter-spacing: -0.3px;
+}
+
+.sectionHeading p {
+  margin: 0;
+  color: #89958c;
+  font-size: 12px;
+}
+
+.bodyText {
+  margin: 0;
+  color: #59685e;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+/* ==============================
+   BENEFITS
+================================ */
+
+.listItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 12px;
+  color: #176b45;
+}
+
+.listItem svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.listItem span {
+  color: #526258;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* ==============================
+   DOCUMENTS & DATES
+================================ */
+
+.documentGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.document {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 17px;
+  border: 1px solid #e8eee9;
+  border-radius: 12px;
+  background: #fbfdfb;
+}
+
+.document > svg {
+  flex-shrink: 0;
+  color: #18734a;
+}
+
+.document small {
+  display: block;
+  margin-bottom: 5px;
+  color: #89958c;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.document p {
+  margin: 0;
+  color: #26392d;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ==============================
+   SIDEBAR
+================================ */
+
+.sidebar {
+  position: sticky;
+  top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.quickCard,
+.helpCard,
+.noteCard {
+  padding: 23px;
+  border: 1px solid #e8eee9;
+  border-radius: 15px;
+  background: white;
+  box-shadow: 0 3px 12px rgba(25, 55, 37, 0.025);
+}
+
+.quickCard h3,
+.helpCard h3 {
+  margin: 0 0 20px;
+  color: #1c3024;
+  font-size: 16px;
+  font-weight: 750;
+}
+
+.quickItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid #eef2ef;
+}
+
+.quickItem span {
+  color: #89958c;
+  font-size: 12px;
+}
+
+.quickItem strong {
+  max-width: 55%;
+  color: #34463a;
+  font-size: 12px;
+  text-align: right;
+}
+
+.quickItem .activeText {
+  color: #16834f;
+}
+
+.websiteButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  margin-top: 20px;
+  padding: 13px;
+  border-radius: 9px;
+  color: white;
+  background: #176b45;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  transition: background 0.2s ease;
+}
+
+.websiteButton:hover {
+  background: #105637;
+}
+
+/* ==============================
+   HELP CARD
+================================ */
+
+.helpCard {
+  background: #f0f8f2;
+  border-color: #e1eee4;
+}
+
+.helpIcon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 15px;
+  color: #176b45;
+  border-radius: 12px;
+  background: #dcefe1;
+}
+
+.helpCard h3 {
+  margin-bottom: 9px;
+}
+
+.helpCard p {
+  margin: 0;
+  color: #68776c;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.helpLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 17px;
+  color: #176b45;
+  font-size: 12px;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.helpLink:hover {
+  gap: 11px;
+}
+
+/* ==============================
+   NOTE CARD
+================================ */
+
+.noteCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #fffaf0;
+  border-color: #f2ead5;
+}
+
+.noteCard svg {
+  flex-shrink: 0;
+  color: #b98525;
+}
+
+.noteCard p {
+  margin: 0;
+  color: #83734f;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+/* ==============================
+   BOTTOM NAVIGATION
+================================ */
+
+.bottomNavigation {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid #e7ece8;
+}
+
+.bottomNavigation a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #176b45;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.bottomNavigation a:hover {
+  gap: 13px;
+}
+
+/* ==============================
+   ERROR SCREEN
+================================ */
+
+.errorContainer {
+  min-height: 65vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  animation: errorFadeIn 0.4s ease;
+}
+
+.errorIcon {
+  width: 85px;
+  height: 85px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 25px;
+  border-radius: 24px;
+  color: #dc4444;
+  background: #fff0f0;
+}
+
+.errorLabel {
+  margin-bottom: 12px;
+  color: #dc4444;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 2px;
+}
+
+.errorContainer h1 {
+  margin: 0 0 12px;
+  color: #17251d;
+  font-size: clamp(25px, 4vw, 34px);
+  letter-spacing: -1px;
+}
+
+.errorContainer p {
+  max-width: 430px;
+  margin: 0;
+  color: #7b897f;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.errorActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.retryButton,
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 650;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.retryButton {
+  border: none;
+  color: white;
+  background: #176b45;
+}
+
+.retryButton:hover {
+  background: #105637;
+  transform: translateY(-2px);
+}
+
+.backButton {
+  border: 1px solid #e2e8e3;
+  color: #47574c;
+  background: white;
+}
+
+.backButton:hover {
+  background: #f8faf8;
+  transform: translateY(-2px);
+}
+
+@keyframes errorFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==============================
+   RESPONSIVE DESIGN
+================================ */
+
+@media (max-width: 900px) {
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .quickCard {
+    grid-row: span 2;
+  }
+
+  .hero {
+    padding: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 22px 14px 40px;
+  }
+
+  .hero {
+    padding: 30px 23px;
+    border-radius: 17px;
+  }
+
+  .heroIcon {
+    display: none;
+  }
+
+  .hero h1 {
+    font-size: 29px;
+  }
+
+  .heroContent > p {
+    font-size: 13px;
+  }
+
+  .heroActions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+  }
+
+  .section {
+    padding: 21px 17px;
+  }
+
+  .sectionHeading h2 {
+    font-size: 15px;
+  }
+
+  .documentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    display: flex;
+  }
+
+  .breadcrumb {
+    font-size: 11px;
+    gap: 7px;
+  }
+
+  .errorActions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .retryButton,
+  .backButton {
+    width: 100%;
+  }
+}

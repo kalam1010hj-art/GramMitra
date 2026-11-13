@@ -1,0 +1,469 @@
+import { Link } from "react-router-dom";
+import {
+  Search,
+  Droplets,
+  Zap,
+  Clock,
+  ArrowRight,
+  CalendarDays,
+  Megaphone,
+  Landmark,
+  GraduationCap,
+  HeartPulse,
+  Home as HomeIcon,
+  FileText,
+  MessageSquare,
+  Users,
+  ChevronRight,
+  Leaf,
+} from "lucide-react";
+import styles from "../modules/Home.module.css";
+import { useEffect, useState } from "react";
+import getUtility from "../services/utility";
+import WaterUtilitys from "../components/WaterUtilitys";
+
+const utilities = [
+  {
+    id: 1,
+    title: "Water Supply",
+    icon: Droplets,
+    time: "06:00 AM - 08:00 AM",
+    description: "Monday, Wednesday & Friday",
+    status: "Scheduled",
+    updated: "Updated today",
+    link: "/services/water",
+    type: "water",
+  },
+  {
+    id: 2,
+    title: "Electricity",
+    icon: Zap,
+    time: "No planned outage",
+    description: "No maintenance announced",
+    status: "Regular Supply",
+    updated: "Updated today",
+    link: "/services/electricity",
+    type: "electricity",
+  },
+];
+const notices = [
+  {
+    id: 1,
+    title: "Gram Sabha Meeting",
+    description:
+      "All village residents are requested to attend the upcoming Gram Sabha meeting.",
+    category: "Meeting",
+    date: "05 Nov 2026",
+  },
+  {
+    id: 2,
+    title: "Drinking Water Maintenance",
+    description:
+      "Water supply may be interrupted during scheduled maintenance work.",
+    category: "Water",
+    date: "05 Nov 2026",
+  },
+  {
+    id: 3,
+    title: "Free Vaccination Drive",
+    description:
+      "A vaccination drive will be organized at the village health centre.",
+    category: "Health",
+    date: "04 Nov 2026",
+  },
+];
+const schemes = [
+  {
+    id: 1,
+    title: "Agriculture Schemes",
+    description: "Financial assistance and benefits for farmers.",
+    icon: Leaf,
+    category: "Agriculture",
+  },
+  {
+    id: 2,
+    title: "Education Schemes",
+    description: "Scholarships and educational support for students.",
+    icon: GraduationCap,
+    category: "Education",
+  },
+  {
+    id: 3,
+    title: "Housing Schemes",
+    description: "Government assistance for eligible families.",
+    icon: HomeIcon,
+    category: "Housing",
+  },
+  {
+    id: 4,
+    title: "Health Schemes",
+    description: "Healthcare assistance and medical benefits.",
+    icon: HeartPulse,
+    category: "Health",
+  },
+];
+const quickServices = [
+  {
+    title: "Register Complaint",
+    description: "Report a village issue.",
+    icon: MessageSquare,
+    link: "/grievances",
+  },
+  {
+    title: "Track Complaint",
+    description: "Check your complaint status.",
+    icon: FileText,
+    link: "/grievances/track",
+  },
+  {
+    title: "Panchayat Officials",
+    description: "Find important contacts.",
+    icon: Users,
+    link: "/officials",
+  },
+  {
+    title: "Public Services",
+    description: "Explore village services.",
+    icon: Landmark,
+    link: "/services",
+  },
+];
+
+function Home() {
+  let [utilitys , setUtilities ]= useState([]) 
+  let now = new Date()
+  let Waterutilities = utilitys.filter((utility)=>utility.utility_type === "WATER")
+
+ console.log("WaterUtilities",Waterutilities)
+
+  
+  useEffect(()=>{
+  getUtility()
+  .then((response)=>{
+      console.log("getUtility response :",response.data)
+      setUtilities(response.data)
+  })
+  },[])
+  return (
+    <div className={styles.home}>
+
+      {/* HERO SECTION */}
+
+      <section className={styles.hero}>
+        <div className={styles.heroContent}>
+
+          <div className={styles.welcomeBadge}>
+            <span className={styles.statusDot}></span>
+            Your Village Information Portal
+          </div>
+
+          <h1>
+            Your Village,
+            <span> Connected.</span>
+          </h1>
+
+          <p className={styles.heroDescription}>
+            Stay informed about village services, government schemes,
+            important announcements and everything happening in your
+            community.
+          </p>
+
+          <form
+            className={styles.searchBox}
+            onSubmit={(event) => {
+              event.preventDefault();
+              const query = event.currentTarget.elements.search.value.trim();
+
+              if (query) {
+                window.location.href = `/search?q=${encodeURIComponent(query)}`;
+              }
+            }}
+          >
+            <Search size={20} />
+
+            <input
+              type="search"
+              name="search"
+              placeholder="Search schemes, notices, services..."
+              aria-label="Search village information"
+            />
+
+            <button type="submit">
+              Search
+            </button>
+          </form>
+
+          <div className={styles.heroLinks}>
+            <Link to="/services">
+              Explore Services <ArrowRight size={16} />
+            </Link>
+
+            <Link to="/notices">
+              Latest Notices <ArrowRight size={16} />
+            </Link>
+          </div>
+
+        </div>
+
+        <div className={styles.heroDecoration}>
+          <div className={styles.decorationCircle}></div>
+          <Leaf className={styles.heroLeaf} />
+        </div>
+      </section>
+
+
+      {/* UTILITY SECTION */}
+
+      {Waterutilities.length>0?
+     < WaterUtilitys WaterUtilities={Waterutilities}/>:
+      <h1>No water utility present</h1>}
+      <section className={styles.section}>
+
+        <div className={styles.sectionHeader}>
+          <div>
+            <span className={styles.eyebrow}>
+              DAILY ESSENTIALS
+            </span>
+
+            <h2>Village Utilities</h2>
+
+            <p>
+              Important updates about your everyday services.
+            </p>
+          </div>
+
+          <Link to="/services" className={styles.viewAll}>
+            All Services <ArrowRight size={17} />
+          </Link>
+        </div>
+
+
+        <div className={styles.utilityGrid}>
+
+          {utilities.map((utility) => {
+            const Icon = utility.icon;
+
+            return (
+              <article
+                key={utility.id}
+                className={`${styles.utilityCard} ${styles[utility.type]}`}
+              >
+
+                <div className={styles.utilityTop}>
+                  <div className={styles.utilityIcon}>
+                    <Icon size={23} />
+                  </div>
+
+                  <span className={styles.utilityStatus}>
+                    <span></span>
+                    {utility.status}
+                  </span>
+                </div>
+
+                <h3>{utility.title}</h3>
+
+                <div className={styles.utilityTime}>
+                  {utility.type === "water" && (
+                    <Clock size={19} />
+                  )}
+
+                  <span>{utility.time}</span>
+                </div>
+
+                <p>{utility.description}</p>
+
+                <div className={styles.utilityBottom}>
+                  <span>{utility.updated}</span>
+
+                  <Link to={utility.link}>
+                    View Schedule <ArrowRight size={15} />
+                  </Link>
+                </div>
+
+              </article>
+            );
+          })}
+
+        </div>
+      </section>
+
+
+      {/* NOTICE SECTION */}
+
+      <section className={`${styles.section} ${styles.noticeSection}`}>
+
+        <div className={styles.sectionHeader}>
+          <div>
+            <span className={styles.eyebrow}>
+              STAY INFORMED
+            </span>
+
+            <h2>Latest Village Notices</h2>
+
+            <p>
+              Important announcements from your Gram Panchayat.
+            </p>
+          </div>
+
+          <Link to="/notices" className={styles.viewAll}>
+            View All <ArrowRight size={17} />
+          </Link>
+        </div>
+
+
+        <div className={styles.noticeList}>
+
+          {notices.map((notice) => (
+            <article key={notice.id} className={styles.noticeCard}>
+
+              <div className={styles.noticeIcon}>
+                <Megaphone size={21} />
+              </div>
+
+              <div className={styles.noticeContent}>
+                <div className={styles.noticeMeta}>
+                  <span>{notice.category}</span>
+
+                  <span className={styles.noticeDate}>
+                    <CalendarDays size={13} />
+                    {notice.date}
+                  </span>
+                </div>
+
+                <h3>{notice.title}</h3>
+
+                <p>{notice.description}</p>
+              </div>
+
+              <Link
+                to={`/notices/${notice.id}`}
+                className={styles.noticeArrow}
+                aria-label={`Read ${notice.title}`}
+              >
+                <ChevronRight size={21} />
+              </Link>
+
+            </article>
+          ))}
+
+        </div>
+      </section>
+
+
+      {/* GOVERNMENT SCHEMES */}
+
+      <section className={styles.section}>
+
+        <div className={styles.sectionHeader}>
+          <div>
+            <span className={styles.eyebrow}>
+              GOVERNMENT BENEFITS
+            </span>
+
+            <h2>Government Schemes</h2>
+
+            <p>
+              Discover schemes and benefits available to eligible citizens.
+            </p>
+          </div>
+
+          <Link to="/schemes" className={styles.viewAll}>
+            Explore All <ArrowRight size={17} />
+          </Link>
+        </div>
+
+
+        <div className={styles.schemeGrid}>
+
+          {schemes.map((scheme) => {
+            const Icon = scheme.icon;
+
+            return (
+              <Link
+                to={`/schemes?category=${scheme.category.toLowerCase()}`}
+                key={scheme.id}
+                className={styles.schemeCard}
+              >
+
+                <div className={styles.schemeIcon}>
+                  <Icon size={23} />
+                </div>
+
+                <span className={styles.schemeCategory}>
+                  {scheme.category}
+                </span>
+
+                <h3>{scheme.title}</h3>
+
+                <p>{scheme.description}</p>
+
+                <span className={styles.schemeLink}>
+                  Explore Schemes <ArrowRight size={15} />
+                </span>
+
+              </Link>
+            );
+          })}
+
+        </div>
+      </section>
+
+
+      {/* QUICK SERVICES */}
+
+      <section className={styles.quickSection}>
+
+        <div className={styles.sectionHeader}>
+          <div>
+            <span className={styles.eyebrow}>
+              HERE TO HELP
+            </span>
+
+            <h2>How Can We Help You?</h2>
+
+            <p>
+              Access important Panchayat services quickly.
+            </p>
+          </div>
+        </div>
+
+
+        <div className={styles.quickGrid}>
+
+          {quickServices.map((service) => {
+            const Icon = service.icon;
+
+            return (
+              <Link
+                to={service.link}
+                key={service.title}
+                className={styles.quickCard}
+              >
+
+                <div className={styles.quickIcon}>
+                  <Icon size={22} />
+                </div>
+
+                <div>
+                  <h3>{service.title}</h3>
+                  <p>{service.description}</p>
+                </div>
+
+                <ArrowRight
+                  size={18}
+                  className={styles.quickArrow}
+                />
+
+              </Link>
+            );
+          })}
+
+        </div>
+      </section>
+
+
+    </div>
+  );
+}
+
+export default Home;

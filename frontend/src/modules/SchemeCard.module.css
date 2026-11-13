@@ -1,0 +1,322 @@
+.card {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  min-height: 340px;
+
+  padding: 22px;
+
+  background: #ffffff;
+  border: 1px solid #e8ebef;
+  border-radius: 16px;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: #cbd5e1;
+
+  box-shadow:
+    0 12px 30px rgba(15, 23, 42, 0.07);
+}
+
+/* Header */
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  margin-bottom: 22px;
+}
+
+.category {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 11px;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  border-radius: 6px;
+}
+
+/* Category colors */
+
+.agriculture {
+  color: #15803d;
+  background: #dcfce7;
+}
+
+.education {
+  color: #1d4ed8;
+  background: #dbeafe;
+}
+
+.health {
+  color: #dc2626;
+  background: #fee2e2;
+}
+
+.housing {
+  color: #c2410c;
+  background: #ffedd5;
+}
+
+.employment {
+  color: #7e22ce;
+  background: #f3e8ff;
+}
+
+.pension {
+  color: #0f766e;
+  background: #ccfbf1;
+}
+
+.women {
+  color: #be185d;
+  background: #fce7f3;
+}
+
+.student {
+  color: #4338ca;
+  background: #e0e7ff;
+}
+
+.other {
+  color: #475569;
+  background: #f1f5f9;
+}
+
+/* Status */
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.active {
+  color: #15803d;
+}
+
+.active .statusDot {
+  background: #22c55e;
+}
+
+.inactive {
+  color: #64748b;
+}
+
+.inactive .statusDot {
+  background: #94a3b8;
+}
+
+/* Content */
+
+.content {
+  margin-bottom: 20px;
+}
+
+.title {
+  margin: 0 0 10px;
+
+  color: #172033;
+
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.4;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+.description {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+  line-height: 1.7;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+/* Benefits */
+
+.benefits {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  padding: 14px;
+
+  margin-bottom: 20px;
+
+  background: #f8fafc;
+  border: 1px solid #eef2f6;
+  border-radius: 10px;
+}
+
+.benefitIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 34px;
+  height: 34px;
+
+  color: #15803d;
+  background: #dcfce7;
+
+  border-radius: 8px;
+}
+
+.benefitLabel {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #64748b;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.benefitText {
+  margin: 0;
+
+  color: #334155;
+
+  font-size: 13px;
+  line-height: 1.5;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+/* Metadata */
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+
+  margin-top: auto;
+  padding-top: 16px;
+
+  border-top: 1px solid #f1f5f9;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+.metaItem svg {
+  flex-shrink: 0;
+  color: #94a3b8;
+}
+
+/* Footer */
+
+.cardFooter {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: 20px;
+}
+
+.detailsButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 10px 15px;
+
+  color: #ffffff;
+  background: #166534;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition: background 0.2s ease;
+}
+
+.detailsButton:hover {
+  background: #14532d;
+}
+
+.detailsButton:focus-visible {
+  outline: 3px solid #86efac;
+  outline-offset: 3px;
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+  .card {
+    padding: 18px;
+    min-height: 0;
+  }
+
+  .title {
+    font-size: 17px;
+  }
+
+  .cardHeader {
+    margin-bottom: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .detailsButton {
+    transition: none;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+}
