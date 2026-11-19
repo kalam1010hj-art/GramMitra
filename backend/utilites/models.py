@@ -30,15 +30,7 @@ class Utility(models.Model):
 
 
 class UtilitySchedule(models.Model):
-    DAYS = [
-        ("MONDAY", "Monday"),
-        ("TUESDAY", "Tuesday"),
-        ("WEDNESDAY", "Wednesday"),
-        ("THURSDAY", "Thursday"),
-        ("FRIDAY", "Friday"),
-        ("SATURDAY", "Saturday"),
-        ("SUNDAY", "Sunday"),
-    ]
+    
 
     utility = models.ForeignKey(
         Utility,
@@ -46,10 +38,7 @@ class UtilitySchedule(models.Model):
         related_name="schedules"
     )
 
-    day = models.CharField(
-        max_length=10,
-        choices=DAYS
-    )
+    
 
     start_time = models.TimeField()
     end_time = models.TimeField()
@@ -65,4 +54,4 @@ class UtilitySchedule(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.utility.name} - {self.day}"
+        return f"{self.utility.name}"

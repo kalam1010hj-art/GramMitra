@@ -1,18 +1,23 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from .models import User
+from .forms import (
+    CustomUserCreationForm,
+    CustomUserChangeForm,
+)
 
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
 
-    add_form = UserCreationForm
-    form = UserChangeForm
+    add_form = CustomUserCreationForm
+    form = CustomUserChangeForm
+
     model = User
 
     list_display = (
+        "username",
         "phone",
         "full_name",
         "role",
@@ -20,15 +25,40 @@ class CustomUserAdmin(UserAdmin):
         "is_active",
     )
 
-    ordering = ("phone",)
+    list_filter = (
+        "role",
+        "is_staff",
+        "is_active",
+    )
+
+    search_fields = (
+        "username",
+        "phone",
+        "full_name",
+        "email",
+    )
+
+    ordering = ("username",)
 
     fieldsets = (
         (None, {
-            "fields": ("phone", "password")
+            "fields": (
+                "username",
+                "phone",
+                "password",
+            )
         }),
+
         ("Personal Information", {
-            "fields": ("full_name", "role", "ward_number")
+            "fields": (
+                "full_name",
+                "email",
+                "profile_image",
+                "role",
+                "ward_number",
+            )
         }),
+
         ("Permissions", {
             "fields": (
                 "is_active",
@@ -38,17 +68,29 @@ class CustomUserAdmin(UserAdmin):
                 "user_permissions",
             )
         }),
+
+        ("Important Dates", {
+            "fields": (
+                "last_login",
+            )
+        }),
+    )
+
+    readonly_fields = (
+        "last_login",
     )
 
     add_fieldsets = (
         (None, {
             "classes": ("wide",),
             "fields": (
+                "username",
                 "phone",
                 "full_name",
+                "email",
+                "role",
                 "password1",
                 "password2",
-                "role",
                 "is_staff",
                 "is_superuser",
             ),

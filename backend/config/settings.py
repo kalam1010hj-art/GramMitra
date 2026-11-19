@@ -11,11 +11,22 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+
+from dotenv import load_dotenv
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# load environment variable from the .env
+load_dotenv(BASE_DIR / ".env")
 
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
+    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
+}
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
@@ -38,6 +49,8 @@ INSTALLED_APPS = [
     'panchayat',
     'schemes',
     'utilites',
+    "cloudinary_storage",
+    "cloudinary",
     'rest_framework',
     'corsheaders',
     'rest_framework.authtoken',
@@ -134,6 +147,16 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES":[
          "rest_framework.authentication.TokenAuthentication"
     ]
+}
+
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
 }
 
 # Static files (CSS, JavaScript, Images)

@@ -13,7 +13,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
 
     phone = models.CharField(max_length=15, unique=True)
+    profile_image = models.ImageField(upload_to="profiles/",blank=True,null=True)
+    email = models.EmailField(unique=True,blank=True)
+    username = models.CharField(unique=True,max_length=150)
+
     full_name = models.CharField(max_length=150)
+
+
 
     role = models.CharField(
         max_length=20,
@@ -34,7 +40,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = "phone"
+    USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ["full_name"]
 
     def __str__(self):

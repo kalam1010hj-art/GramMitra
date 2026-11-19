@@ -1,0 +1,89 @@
+/* Designed for the UtilitySchedule.jsx layout in the preceding response. */
+
+.schedule {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 17px 18px;
+  background: #f7faf8;
+  border: 1px solid #e4ebe6;
+  border-radius: 12px;
+}
+
+.currentSchedule {
+  background: #effaf2;
+  border-color: #b8e4c5;
+}
+
+.scheduleMain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.timeRange {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-width: 0;
+}
+
+.time {
+  color: #173829;
+  font-size: 17px;
+  font-weight: 750;
+  line-height: 1.45;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.arrow {
+  color: #8ca197;
+  flex: 0 0 auto;
+}
+
+.scheduleStatus {
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.current {
+  color: #166534;
+  background: #d7f5df;
+}
+
+.upcoming {
+  color: #92400e;
+  background: #fef3c7;
+}
+
+.finished {
+  color: #53685b;
+  background: #e8f0ea;
+}
+
+.description {
+  margin: 12px 0 0;
+  color: #5f7167;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 480px) {
+  .schedule {
+    padding: 15px;
+  }
+  .timeRange {
+    gap: 8px;
+  }
+  .time {
+    font-size: 16px;
+  }
+}

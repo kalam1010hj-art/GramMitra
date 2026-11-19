@@ -1,0 +1,303 @@
+/* Reusable utility card — compatible with WaterUtilityCard.jsx and UtilityCard.jsx */
+
+.container,
+.card {
+  --utility-accent: #087fac;
+  --utility-tint: #e9f6fc;
+  --utility-border: #d6eaf4;
+
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 25px;
+  background: #ffffff;
+  color: #1e3329;
+  border: 1px solid #e5ece8;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(30, 69, 44, 0.045);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.container:hover,
+.card:hover {
+  border-color: var(--utility-border);
+  box-shadow: 0 10px 28px rgba(30, 69, 44, 0.075);
+}
+
+/* Colors are applied when UtilityCard.jsx adds a theme class. */
+.water {
+  --utility-accent: #0284c7;
+  --utility-tint: #e0f2fe;
+  --utility-border: #bae6fd;
+}
+
+.electricity {
+  --utility-accent: #b45309;
+  --utility-tint: #fef3c7;
+  --utility-border: #fde68a;
+}
+
+.garbage {
+  --utility-accent: #15803d;
+  --utility-tint: #dcfce7;
+  --utility-border: #bbf7d0;
+}
+
+.other {
+  --utility-accent: #64748b;
+  --utility-tint: #f1f5f9;
+  --utility-border: #cbd5e1;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  min-width: 0;
+}
+
+.utilityInfo,
+.utilityIdentity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  flex: 1 1 220px;
+}
+
+.icon,
+.iconBox {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  background: var(--utility-tint);
+  color: var(--utility-accent);
+  border-radius: 14px;
+}
+
+.titleSection,
+.heading {
+  min-width: 0;
+}
+
+.titleSection h2,
+.heading h3 {
+  margin: 0 0 5px;
+  color: #183c2a;
+  font-size: clamp(18px, 1.65vw, 21px);
+  font-weight: 750;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.titleSection p,
+.category {
+  display: block;
+  margin: 0;
+  color: #607468;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.category {
+  color: var(--utility-accent);
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.activeBadge,
+.inactiveBadge,
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 7px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.activeBadge,
+.liveStatus {
+  color: #166534;
+  background: #e1f7e7;
+}
+
+.inactiveBadge,
+.neutralStatus,
+.finishedStatus {
+  color: #64748b;
+  background: #f1f5f9;
+}
+
+.upcomingStatus {
+  color: #92400e;
+  background: #ffefc9;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  background: currentColor;
+  border-radius: 50%;
+}
+
+.description {
+  margin: 16px 0 0;
+  color: #586e61;
+  font-size: 14px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.statusSection {
+  margin: 18px 0 4px;
+}
+
+.scheduleHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+  padding-top: 19px;
+  padding-bottom: 15px;
+  border-top: 1px solid #e7ece8;
+}
+
+.scheduleTitle,
+.scheduleHeading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--utility-accent);
+}
+
+.scheduleTitle h3,
+.scheduleHeading h4 {
+  margin: 0;
+  color: #2a4034;
+  font-size: 15px;
+  font-weight: 750;
+  line-height: 1.4;
+}
+
+.scheduleCount {
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  color: #536b5f;
+  background: #f1f6f2;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.schedules,
+.scheduleList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.schedules > *,
+.scheduleList > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.emptyState,
+.emptySchedule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 120px;
+  padding: 20px;
+  background: #f8faf9;
+  border: 1px dashed #cbd8d0;
+  border-radius: 12px;
+  color: #648074;
+  text-align: center;
+}
+
+.emptyState p,
+.emptySchedule p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding-top: 15px;
+  color: #70857a;
+  border-top: 1px solid #edf1ee;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .container,
+  .card {
+    padding: 20px 18px;
+    border-radius: 16px;
+  }
+
+  .utilityInfo,
+  .utilityIdentity {
+    gap: 11px;
+  }
+
+  .icon,
+  .iconBox {
+    width: 46px;
+    height: 46px;
+    flex-basis: 46px;
+    border-radius: 12px;
+  }
+
+  .titleSection h2,
+  .heading h3 {
+    font-size: 18px;
+  }
+
+  .scheduleTitle h3,
+  .scheduleHeading h4 {
+    font-size: 14px;
+  }
+
+  .scheduleHeader {
+    margin-top: 19px;
+    padding-top: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .container,
+  .card {
+    transition: none;
+  }
+}

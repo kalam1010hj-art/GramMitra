@@ -1,20 +1,14 @@
-import WaterUtilityCard from "./WaterUtilityCard"
+import WaterUtilityCard from "./UtilityCard";
+import styles from "../modules/WaterUtilitys.module.css";
 
-const DAYS = ["SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"]
-function WaterUtilitys({WaterUtilities}){
-    let now = new Date()
-    let todaysUtilities = WaterUtilities.filter(
-        (utility)=>utility.schedules?.find((schedule)=>schedule.day == DAYS[now.getDay()]))
-    console.log(todaysUtilities)
-    return (
-        <div>
-            {
-                todaysUtilities.map((utility,id)=>{
-                    return <WaterUtilityCard utility={utility} key={id}/>
-                })
-            }
-        
-         
-        </div>
-    )
-} export default WaterUtilitys
+function WaterUtilitys({ WaterUtilities }) {
+  return (
+    <div className={styles.container}>
+      {WaterUtilities.map((utility) => (
+        <WaterUtilityCard key={utility.id} utility={utility} />
+      ))}
+    </div>
+  );
+}
+
+export default WaterUtilitys;
