@@ -1,8 +1,14 @@
 from django.urls import path
-from .views import GrievanceView,GrievanceDetailsView,GrievanceUpdateView
+from .views import (
+    AttachmentView,
+    GrievanceView,
+    GrievanceDetailsView,
+    GrievanceUpdateView,
+)
 
 urlpatterns = [
-    path("",GrievanceView.as_view()),
-    path("<int:pk>",GrievanceDetailsView.as_view()),
-    path("post-update",GrievanceUpdateView.as_view())
+    path("<int:pk>/attachment", AttachmentView.as_view()),
+    path("", GrievanceView.as_view()),
+    path("<int:pk>", GrievanceDetailsView.as_view()),
+    path("post-update", GrievanceUpdateView.as_view()),
 ]

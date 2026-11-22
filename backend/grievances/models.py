@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from .storage import private_images
 
 
 class Grievance(models.Model):
@@ -49,6 +50,7 @@ class Grievance(models.Model):
 
     image = models.ImageField(
         upload_to="grievances/",
+        storage=private_images,
         null=True,
         blank=True
     )
@@ -75,6 +77,8 @@ class Grievance(models.Model):
         related_name="assigned_grievances"
     )
 
+    assigned_at = models.DateTimeField(null=True, blank=True, db_index=True)
+
     # Resolution information
     resolution_note = models.TextField(
         blank=True
@@ -100,6 +104,7 @@ class Grievance(models.Model):
         return f"{self.title} - {self.status}"
 
     class Meta:
+        indexes = [models.Index(fields=["user", "-created_at"]), models.Index(fields=["assigned_to", "status"])]
         ordering = ["-created_at"]
 
 class GrievanceUpdates(models.Model):

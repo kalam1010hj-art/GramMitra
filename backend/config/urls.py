@@ -14,15 +14,39 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('utility/',include("utilites.api.urls")),
-    path('panchayat/',include("panchayat.api.urls")),
-    path('schemes/',include("schemes.api.urls")),
-    path('accounts/',include("accounts.api.urls")),
-    path('notices/',include("notices.api.urls")),
-    path('grievances/',include("grievances.api.urls"))
+    path("admin/", admin.site.urls),
+    path("utility/", include("utilites.api.urls")),
+    path("panchayat/", include("panchayat.api.urls")),
+    path("schemes/", include("schemes.api.urls")),
+    path("accounts/", include("accounts.api.urls")),
+    path("notices/", include("notices.api.urls")),
+    path("grievances/", include("grievances.api.urls")),
+]
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+from config.health import HealthView
+from officials.views import (
+    DirectoryView,
+    EntryView,
+    Dashboard,
+    UsersView,
+    UserAccessView,
+)
+
+urlpatterns += [
+    path("health/", HealthView.as_view()),
+    path("officials/", DirectoryView.as_view()),
+    path("officials/<int:pk>", EntryView.as_view()),
+    path("dashboard/", Dashboard.as_view()),
+    path("accounts/users", UsersView.as_view()),
+    path("accounts/users/<int:pk>", UserAccessView.as_view()),
 ]

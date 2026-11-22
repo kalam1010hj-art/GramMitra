@@ -1,38 +1,31 @@
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from django.db.models import Q
+from django.utils import timezone
+from config.api import Collection, Detail
 from .serializers import NoticeSerializer
-from ..models import Notice
 
 
-# This view is used for Notice Page  to display all available notices in the Database.
-# And also used for Notice Tricker component to display important notices
+class Notices:
+    serializer = NoticeSerializer
 
-class NoticeView(APIView):
-
-    def get(self,request):
-        notices = Notice.objects.all()
-        noticeTricker = request.query_params.get("noticeTricker",False)
-        if noticeTricker:
-            notices = notices.filter(display_it=True)
-        serializer = NoticeSerializer(notices,many = True)
-        return Response(serializer.data)
-
-class NoticeDetailsView(APIView):
-    def get(self,request,pk):
-       try:
-           notice = Notice.objects.get(id=pk )
-           serializer = NoticeSerializer(notice)
-           return Response(serializer.data)
-       except Notice.DoesNotExist:
-           return Response({"details":"Notice doesn't exist."},status=404)
+    def records(self, request):
+        rows = super().records(request)
+        if (
+            getattr(request.user, "role", None) != "admin"
+            or request.query_params.get("manage") != "1"
+        ):
+            rows = rows.filter(is_published=True).filter(
+                Q(expires_at__isnull=True) | Q(expires_at__gt=timezone.now())
+            )
+        if request.query_params.get("noticeTricker"):
+            rows = rows.filter(Q(display_it=True) | Q(is_important=True))
+        if request.query_params.get("category"):
+            rows = rows.filter(category=request.query_params["category"])
+        return rows.filter(title__icontains=request.query_params.get("search", ""))
 
 
+class NoticeView(Notices, Collection):
+    pass
 
 
-
-
-
-
-
-    
-
+class NoticeDetailsView(Notices, Detail):
+    pass

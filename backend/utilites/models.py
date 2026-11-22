@@ -55,3 +55,6 @@ class UtilitySchedule(models.Model):
 
     def __str__(self):
         return f"{self.utility.name}"
+    day = models.CharField(max_length=9, default="DAILY", choices=[
+        (key, key.title()) for key in
+        ("DAILY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY")])

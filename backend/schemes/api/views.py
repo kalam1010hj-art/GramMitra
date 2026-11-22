@@ -1,54 +1,32 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from .permisions import IsAdminorReadonly
-from rest_framework.permissions import IsAuthenticated
+from django.db.models import Q
+from django.utils import timezone
+from config.api import Collection, Detail
 from .serializers import SchemeSerializer
-from ..models import GovernmentScheme
 
 
-class SchemeView(APIView):
-    permission_classes = [IsAdminorReadonly]
-    def get(self,request):
-        schemes = GovernmentScheme.objects.all()
-        serializer = SchemeSerializer(schemes,many=True)
-        print(request.user)
-        return Response(serializer.data)
+class Schemes:
+    serializer = SchemeSerializer
 
-    def post(self,request):
-        serializer = SchemeSerializer(data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response({"error":serializer.errors})
-    
-    
-class SchemeDetailsView(APIView):
-    permission_classes = [IsAdminorReadonly]
-    def get(self,request,pk):
-        try:
-            scheme = GovernmentScheme.objects.get(id=pk)
-            serializer = SchemeSerializer(scheme)
-            return Response(serializer.data)
-        except GovernmentScheme.DoesNotExist:
-            return Response({"error":"not found"},status=404)
+    def records(self, request):
+        rows = super().records(request)
+        if (
+            getattr(request.user, "role", None) != "admin"
+            or request.query_params.get("manage") != "1"
+        ):
+            now = timezone.now()
+            rows = (
+                rows.filter(is_active=True)
+                .filter(Q(start_date__isnull=True) | Q(start_date__lte=now))
+                .filter(Q(end_date__isnull=True) | Q(end_date__gte=now))
+            )
+        if request.query_params.get("category"):
+            rows = rows.filter(category=request.query_params["category"])
+        return rows.filter(name__icontains=request.query_params.get("search", ""))
 
-    def put(self,request,pk):
-        scheme = GovernmentScheme.objects.get(id =pk)
-        serializer = SchemeSerializer(scheme,data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response({"error":serializer.errors})
 
-    def patch(self,request,pk):
-        scheme = GovernmentScheme.objects.get(id =pk)
-        serializer = SchemeSerializer(scheme,data = request.data,partial = True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response({"error":serializer.errors})
-    def delete(self,request,pk):
-        scheme = GovernmentScheme.objects.get(id=pk)
-        scheme.delete()
-        return Response({"Message":"sucessfully deleted!"})
-    
+class SchemeView(Schemes, Collection):
+    pass
+
+
+class SchemeDetailsView(Schemes, Detail):
+    pass

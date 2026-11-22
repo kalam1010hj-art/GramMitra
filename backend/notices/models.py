@@ -13,3 +13,9 @@ class Notice(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
+    category = models.CharField(max_length=30, default="GENERAL", choices=[
+        (key, key.replace("_", " ").title()) for key in
+        ("GENERAL", "WATER", "ELECTRICITY", "MEETING", "HEALTH", "PUBLIC_WORKS", "EMERGENCY")])
+    is_published = models.BooleanField(default=True)
+    expires_at = models.DateTimeField(blank=True, null=True)
