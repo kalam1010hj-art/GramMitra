@@ -3,6 +3,8 @@ import Navbar from "../../components/Navbar";
 import NoticeTicker from "../../components/NoticeTicker";
 import getTrickerNotices from "../../services/notices";
 import { useEffect, useState } from "react";
+import footerStyles from "../../modules/Footer.module.css";
+
 function MainLayout(){
     let [notices,setNotices] = useState([])
     
@@ -19,7 +21,13 @@ function MainLayout(){
             <Navbar/>
              <NoticeTicker notices={notices} />
             <Outlet />
-            <footer style={{padding:"2rem",display:"flex",gap:"1rem",flexWrap:"wrap"}}>{["about","contact","privacy","terms"].map(page=><Link key={page} to={"/"+page}>{page[0].toUpperCase()+page.slice(1)}</Link>)}</footer>
+            <footer className={footerStyles.footer}>
+                <nav className={footerStyles.links} aria-label="Footer">
+                    {["About", "Contact", "Privacy", "Terms"].map(label => (
+                        <Link key={label} to={"/" + label.toLowerCase()}>{label}</Link>
+                    ))}
+                </nav>
+            </footer>
 
         </div>
     )
