@@ -12,6 +12,7 @@ class GrievanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Grievance
         fields = "__all__"
+        read_only_fields = ["user"]
 
 class GrievanceUpdateSerializer(serializers.ModelSerializer):
     class Meta:

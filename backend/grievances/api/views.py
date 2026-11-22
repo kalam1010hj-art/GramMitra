@@ -1,7 +1,8 @@
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.exceptions import PermissionDenied
-from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from ..models import Grievance,GrievanceUpdates
 from django.shortcuts import get_object_or_404
 from .serializers import GrievanceSerializer,GrievanceUpdateSerializer,GrievanceDetailsSerializer
@@ -17,11 +18,9 @@ class GrievanceView(APIView):
 
     def post(self,request):
         serializer = GrievanceSerializer(data=request.data)
-        print(request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors,status=400)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     
 
 class GrievanceDetailsView(APIView):

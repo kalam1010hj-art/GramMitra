@@ -1,5 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import { AuthContext } from "../context/AuthProvider";// Adjust path if your context is elsewhere
+import { useEffect, useRef, useState } from "react";
 import {
   AlertCircle,
   ArrowLeft,
@@ -55,7 +54,6 @@ const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
  * The parent only needs to render <PostGrievance />.
  */
 export default function PostGrievance({ onBack }) {
-  const { user } = useContext(AuthContext);
   const [values, setValues] = useState(INITIAL_VALUES);
   const [image, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState("");
@@ -132,13 +130,7 @@ export default function PostGrievance({ onBack }) {
       return;
     }
 
-    if (!user?.id) {
-      setSubmitError("Your user information is unavailable. Please log in again.");
-      return;
-    }
-
     const formData = new FormData();
-    formData.append("user", String(user.id));
     formData.append("title", values.title.trim());
     formData.append("description", values.description.trim());
     formData.append("category", values.category);
