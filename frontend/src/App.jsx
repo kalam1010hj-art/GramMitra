@@ -9,6 +9,9 @@ import MainLayout from "./pages/layouts/MainLayout"
 import Notices from "./pages/Notices"
 import NoticeDetails from "./pages/NoticeDetails"
 import EditProfile from "./pages/EditProfile"
+import Grievances from "./pages/Grievances"
+import GrievanceDetails from "./pages/GrievanceDetails"
+import PostGrievance from "./pages/PostGrievance"
 
 function App(){
 
@@ -25,6 +28,9 @@ function App(){
         <Route path="/notices/:id" element={<NoticeDetails/>}/>
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/profile/edit" element={<EditProfile/>}/>
+        <Route path="/grievances" element={<Grievances/>}/>
+        <Route path="/grievances/:id" element={<GrievanceDetails/>}/>
+        <Route path="/grievances/create" element={<PostGrievance/>}/>
         </Route>
         <Route  path="login/" element={<Login/>} />
         <Route  path="register/" element={<Register/>} />

@@ -23,5 +23,6 @@ urlpatterns = [
     path('panchayat/',include("panchayat.api.urls")),
     path('schemes/',include("schemes.api.urls")),
     path('accounts/',include("accounts.api.urls")),
-    path('notices/',include("notices.api.urls"))
+    path('notices/',include("notices.api.urls")),
+    path('grievances/',include("grievances.api.urls"))
 ]
