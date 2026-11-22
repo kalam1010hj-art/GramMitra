@@ -1,0 +1,35 @@
+.footer {
+  background: #123c2c;
+  color: #f5faf6;
+  padding: 1rem clamp(1rem, 7vw, 5rem);
+  font-family: system-ui, sans-serif;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1.5rem;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.links a:hover,
+.links a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}
+
+.links a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
