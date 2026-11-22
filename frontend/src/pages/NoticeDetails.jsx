@@ -12,7 +12,7 @@ import {
   Clock3,
 } from "lucide-react";
 
-import axios from "axios";
+
 import styles from "../modules/NoticeDetails.module.css";
 import { getNoticeDetails } from "../services/notices";
 
@@ -29,13 +29,11 @@ function NoticeDetails() {
 useEffect(()=>{
 getNoticeDetails(id)
 .then((response)=>{
-    console.log(response.data)
     setNotice(response.data)
 })
 .catch((error)=>{
-    console.log(error.message)
     if(error.response){
-        setError(error.response.data?.details)
+        setError(error.response.data?.detail || "Notice unavailable.")
     }
     else if(error.request){
         setError(error.message)

@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { api } from "../services/client";
+import { createContext, useEffect, useState } from "react";
 export const AuthContext = createContext()
 
 function AuthProvider({children}){
@@ -26,7 +27,7 @@ function AuthProvider({children}){
         setUser(user)
     }
 
-    function LogoutUser(){
+    function clearSession(){
         localStorage.removeItem("token")
         localStorage.removeItem("user")
         setUser(null)
@@ -34,6 +35,24 @@ function AuthProvider({children}){
     }
 
     
+    useEffect(() => {
+        window.addEventListener("grammitra-session-ended", clearSession);
+        return () => window.removeEventListener("grammitra-session-ended", clearSession);
+    }, []);
+    useEffect(() => {
+        let active = true;
+        if (token) api.get("accounts/profileEdit").then(({data}) => {
+            if (active) setUser(data);
+        }).catch(() => {});
+        return () => { active = false; };
+    }, [token]);
+    useEffect(() => {
+        if (user) localStorage.setItem("user", JSON.stringify(user));
+    }, [user]);
+    async function LogoutUser() {
+        await api.post("accounts/logout");
+        clearSession();
+    }
 return (
  < AuthContext.Provider value={{user,token,setUser,LoginUser,LogoutUser,IsAuthenticated}}>
    {children}

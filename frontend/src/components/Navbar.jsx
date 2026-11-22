@@ -35,7 +35,7 @@ import { AuthContext } from "../context/AuthProvider";
    NAVIGATION LINKS
 ================================ */
 
-const navigationLinks = [
+const publicLinks = [
   {
     name: "Home",
     path: "/",
@@ -170,6 +170,7 @@ function Navbar() {
     LogoutUser,
   } = useContext(AuthContext);
 
+  const navigationLinks = ["admin","official"].includes(user?.role) ? [...publicLinks, {name:"Dashboard", path:"/dashboard", icon:LayoutGrid}] : publicLinks;
   const profileImage = getProfileImageUrl(
     user?.profile_image
   );
@@ -189,9 +190,9 @@ function Navbar() {
      LOGOUT
   ================================ */
 
-  function handleLogout() {
+  async function handleLogout() {
 
-    LogoutUser();
+    try { await LogoutUser(); } catch { window.alert("Logout could not be confirmed. Please retry."); return; }
 
     closeMenus();
 

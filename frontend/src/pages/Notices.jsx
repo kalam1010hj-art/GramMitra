@@ -92,12 +92,12 @@ function NoticeCard({ notice }) {
           }`}
         >
           <Icon size={14} />
-          {config.label}
+          {notice.category?.replaceAll("_"," ") || config.label}
         </span>
 
         <span className={styles.cardDate}>
           <CalendarDays size={14} />
-          {formatDate(notice.created_at)}
+          {formatDate(notice.published_at)}
         </span>
       </div>
 
@@ -138,6 +138,9 @@ function NoticeCard({ notice }) {
 // ==============================
 
 function Notices() {
+  const [loading,setLoading]=useState(true);
+  const [error,setError]=useState("");
+  const [category,setCategory]=useState("");
   const [search, setSearch] = useState("");
 
   const [notices,setNotices] = useState([])
@@ -148,6 +151,7 @@ function Notices() {
     const query = search.trim().toLowerCase();
 
     return notices
+      .filter(notice=>!category || notice.category===category)
       .filter((notice) => {
         return (
           notice.title.toLowerCase().includes(query) ||
@@ -167,11 +171,11 @@ function Notices() {
         // Latest notices first
 
         return (
-          new Date(b.created_at) -
-          new Date(a.created_at)
+          new Date(b.published_at) -
+          new Date(a.published_at)
         );
       });
-  }, [notices, search]);
+  }, [notices, search, category]);
 
   const importantCount = notices.filter(
     (notice) => notice.is_important
@@ -187,14 +191,16 @@ function Notices() {
   useEffect(()=>{
     getNotices()
     .then((response)=>{
-     console.log("Notices in Notice page",response.data)
      setNotices(response.data)
     })
     .catch((error)=>{
-      console.log(error.message)
+      setError("Could not load notices. Please refresh to retry.")
     })
+    .finally(()=>setLoading(false))
   },[])
 
+  if (error) return <p role="alert">{error}</p>;
+  if (loading) return <p role="status">Loading notices…</p>;
   return (
     <div className={styles.page}>
 
@@ -305,7 +311,7 @@ function Notices() {
             SEARCH SECTION
         ========================== */}
 
-        <div className={styles.searchSection}>
+        <label>Category <select value={category} onChange={e=>setCategory(e.target.value)}><option value="">All categories</option>{[...new Set(notices.map(n=>n.category))].map(c=><option key={c}>{c}</option>)}</select></label><div className={styles.searchSection}>
 
           <div className={styles.searchWrapper}>
 

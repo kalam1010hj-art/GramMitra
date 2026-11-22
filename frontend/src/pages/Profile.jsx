@@ -11,7 +11,7 @@ import {
   ClipboardList,
   ArrowRight,
   CheckCircle2,
-  Clock3,
+
   Camera,
   Home,
 } from "lucide-react";
@@ -19,7 +19,10 @@ import {
 import { AuthContext } from "../context/AuthProvider";
 import styles from "../modules/Profile.module.css";
 
+import { useNavigate } from "react-router-dom";
+
 function Profile() {
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
 
   const fullName = user?.full_name || "GramMitra User";
@@ -104,7 +107,7 @@ function Profile() {
                   <button
                     type="button"
                     className={styles.editButton}
-                   
+
                     title="Coming soon"
                   >
                     <Pencil size={16} />
@@ -266,15 +269,10 @@ function Profile() {
                 submitted to your Gram Panchayat.
               </p>
 
-              <div className={styles.comingSoon}>
-                <Clock3 size={16} />
-                Coming Soon
-              </div>
-
               <button
                 type="button"
                 className={styles.grievanceButton}
-                disabled
+                onClick={() => navigate("/grievances")}
               >
                 View My Grievances
                 <ArrowRight size={17} />
@@ -293,8 +291,8 @@ function Profile() {
               </p>
 
               <div className={styles.settingsList}>
-             
-                <button type="button" >
+
+                <button type="button" onClick={() => navigate("/profile/edit")}>
                   <span className={styles.settingLeft}>
                     <Pencil size={18} />
                     Edit Profile
@@ -303,7 +301,7 @@ function Profile() {
                   <ArrowRight size={17} />
                 </button>
 
-                <button type="button" disabled>
+                <button type="button" onClick={() => navigate("/profile/password")}>
                   <span className={styles.settingLeft}>
                     <LockKeyhole size={18} />
                     Change Password

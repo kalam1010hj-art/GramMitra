@@ -1,11 +1,5 @@
-import axios from "axios";
-
-const URL = import.meta.env.VITE_API_URL;
-
-function getGrievances() {
-  return axios.get(`${URL}grievances/`);
+import { api } from "./client";
+export default function getGrievances(params) {
+  return api.get("grievances/", { params });
 }
-export default getGrievances;
-export function getGrievanceDetails(id){
-   return axios.get(`${URL}grievances/${id}`)
-}
+export const getGrievanceDetails = (id) => api.get("grievances/" + id);

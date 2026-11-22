@@ -170,10 +170,6 @@ function Register() {
       errors.full_name = "Full name is required.";
     }
 
-    if (!formData.username.trim()) {
-      errors.username = "Username is required.";
-    }
-
     if (!/^[0-9]{10}$/.test(formData.phone)) {
       errors.phone = "Enter a valid 10-digit phone number.";
     }
@@ -212,7 +208,7 @@ function Register() {
     try {
       const payload = {
         ...formData,
-        username: formData.username.trim(),
+        username: formData.username.trim() || formData.phone,
         full_name: formData.full_name.trim(),
         email: formData.email.trim(),
       };
@@ -434,7 +430,7 @@ function Register() {
               <div className={styles.formGroup}>
 
                 <label htmlFor="username">
-                  Username <span>*</span>
+                  Username (optional)
                 </label>
 
                 <div
@@ -461,7 +457,7 @@ function Register() {
                         ? "username_error"
                         : undefined
                     }
-                    required
+
                   />
                 </div>
 
@@ -474,7 +470,7 @@ function Register() {
                   </p>
                 ) : (
                   <p className={styles.inputHint}>
-                    You'll use this username to sign in.
+                    Optional. You can sign in with your phone number.
                   </p>
                 )}
 

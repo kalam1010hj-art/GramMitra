@@ -1,0 +1,1 @@
+{"rewrites":[{"source":"/((?!assets/|favicon.svg|robots.txt).*)","destination":"/index.html"}],"headers":[{"source":"/(dashboard|profile|grievances|login|register)(.*)","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]}]}

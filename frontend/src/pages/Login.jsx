@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Eye, EyeOff, LockKeyhole, Phone, ArrowRight } from "lucide-react";
 import styles from "../modules/Login.module.css";
@@ -8,7 +8,7 @@ import { AuthContext } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  let {LoginUser,user,IsAuthenticated,setUser} = useContext(AuthContext)
+  let {LoginUser} = useContext(AuthContext)
   let navigate =useNavigate()
   const [formData, setFormData] = useState({
     username: "",
@@ -19,15 +19,8 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  console.log("Login component Rendered")
-
-  useEffect(()=>{
-    console.log("Login component created")
-    return ()=> console.log("Login component mounted")
-  },[])
-
   const handleChange = (e) => {
-    console.log("handleChange excecuted")
+
     const { name, value } = e.target;
 
     setFormData((prev) => ({
@@ -55,20 +48,20 @@ function Login() {
     login(formData)
     .then((response)=>{
       LoginUser(response.data.token,response.data.user)
-     
-      navigate("/")
+
+      navigate(response.data.user.role === "resident" ? "/profile" : "/dashboard")
 
     })
     .catch((error)=>{
-      console.log(error.response.data)
-      setError(error.response?.data.error)
+
+      setError(error.response?.data?.detail || "Unable to sign in. Please try again.")
     })
     .finally(()=>{
       setIsLoading(false)
     })
-  
+
   }
-  
+
   return (
     <main className={styles.page}>
       <div className={styles.container}>
@@ -100,7 +93,7 @@ function Login() {
             )}
 
             <div className={styles.formGroup}>
-              <label htmlFor="phone">Username</label>
+              <label htmlFor="phone">Phone number or username</label>
 
               <div className={styles.inputWrapper}>
                 <Phone size={19} className={styles.inputIcon} />
@@ -109,11 +102,11 @@ function Login() {
                   id="phone"
                   type="text"
                   name="username"
-                  placeholder="Enter your username"
+                  placeholder="Phone number or username"
                   value={formData.username}
                   onChange={handleChange}
-                 
-              
+
+
                   required
                 />
               </div>

@@ -53,10 +53,12 @@ const statusFilters = [
   { label: "Pending", value: "PENDING" },
   { label: "In Progress", value: "IN_PROGRESS" },
   { label: "Resolved", value: "RESOLVED" },
-  { label: "Closed", value: "CLOSED" },
+  { label: "Rejected", value: "REJECTED" },
 ];
 
 function Grievances() {
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [categoryFilter, setCategoryFilter] = useState("ALL");
@@ -73,7 +75,7 @@ function Grievances() {
     setIsLoading(true);
     setError("");
 
-    getGrievances()
+    getGrievances({page, search, status: statusFilter === "ALL" ? undefined : statusFilter, category: categoryFilter === "ALL" ? undefined : categoryFilter})
       .then((response) => {
         if (!isCurrent) return;
 
@@ -85,10 +87,10 @@ function Grievances() {
         }
 
         setGrievances(items);
+        setTotal(data.count ?? items.length);
       })
       .catch((err) => {
         if (!isCurrent) return;
-        console.error("Failed to load grievances:", err);
         setError(getErrorMessage(err));
         setGrievances([]);
       })
@@ -100,7 +102,7 @@ function Grievances() {
     return () => {
       isCurrent = false;
     };
-  }, [retryKey]);
+  }, [retryKey, page, search, statusFilter, categoryFilter]);
 
   const retryLoading = () => setRetryKey((current) => current + 1);
 
@@ -121,36 +123,11 @@ function Grievances() {
   }, [grievances]);
 
   // Available categories
-  const categories = useMemo(() => {
-    return [
-      ...new Set(grievances.map((item) => item.category).filter(Boolean)),
-    ];
-  }, [grievances]);
-
-  // Search and filtering
-  const filteredGrievances = useMemo(() => {
-    const searchText = search.trim().toLowerCase();
-
-    return grievances.filter((item) => {
-      const matchesSearch =
-        !searchText ||
-        [item.title, item.description, item.location].some((value) =>
-          String(value || "")
-            .toLowerCase()
-            .includes(searchText),
-        );
-
-      const matchesStatus =
-        statusFilter === "ALL" || item.status === statusFilter;
-
-      const matchesCategory =
-        categoryFilter === "ALL" || item.category === categoryFilter;
-
-      return matchesSearch && matchesStatus && matchesCategory;
-    });
-  }, [grievances, search, statusFilter, categoryFilter]);
+  const categories = ["WATER","ELECTRICITY","ROAD","DRAINAGE","SANITATION","STREET_LIGHT","OTHER"];
+  const filteredGrievances = grievances;
 
   const resetFilters = () => {
+    setPage(1);
     setSearch("");
     setStatusFilter("ALL");
     setCategoryFilter("ALL");
@@ -205,7 +182,8 @@ function Grievances() {
           </div>
         </section>
 
-        {/* Statistics */}
+        <nav aria-label="Grievance pages"><button disabled={page <= 1} onClick={() => setPage(page-1)}>Previous</button> Page {page} of {Math.max(1, Math.ceil(total / 20))} <button disabled={page * 20 >= total} onClick={() => setPage(page+1)}>Next</button></nav>
+        {/* Statistics for the current page */}<p>Summary for this page</p>
         <section className={styles.statsGrid}>
           <div className={styles.statCard}>
             <div className={`${styles.statIcon} ${styles.totalIcon}`}>
@@ -283,7 +261,7 @@ function Grievances() {
               <input
                 type="search"
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => (setPage(1), setSearch(e.target.value))}
                 placeholder="Search grievances, issues, locations..."
                 aria-label="Search grievances"
               />
@@ -292,7 +270,7 @@ function Grievances() {
             <div className={styles.categoryContainer}>
               <select
                 value={categoryFilter}
-                onChange={(e) => setCategoryFilter(e.target.value)}
+                onChange={(e) => (setPage(1), setCategoryFilter(e.target.value))}
                 aria-label="Filter by category"
               >
                 <option value="ALL">All Categories</option>
@@ -312,7 +290,7 @@ function Grievances() {
               <button
                 type="button"
                 key={filter.value}
-                onClick={() => setStatusFilter(filter.value)}
+                onClick={() => {setPage(1);setStatusFilter(filter.value)}}
                 className={`${styles.filterTab} ${
                   statusFilter === filter.value ? styles.activeTab : ""
                 }`}

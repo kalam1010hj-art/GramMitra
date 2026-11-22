@@ -48,7 +48,6 @@ function SchemeDetails() {
         setScheme(response.data);
       })
       .catch((error) => {
-        console.log(error);
 
         if (error.response) {
           setError(error.response.status);

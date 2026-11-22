@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /grievances
+Disallow: /login
+Disallow: /register

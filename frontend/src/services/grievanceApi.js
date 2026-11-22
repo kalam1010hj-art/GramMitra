@@ -1,31 +1,7 @@
-import axios from "axios";
+import { api } from "./client";
 
-// Set VITE_GRIEVANCE_POST_URL in your frontend .env to your actual Django POST URL.
-// Example: VITE_GRIEVANCE_POST_URL=http://127.0.0.1:8000/grievances/
-const GRIEVANCE_POST_URL =
-  import.meta.env.VITE_GRIEVANCE_POST_URL ||
-  `${(import.meta.env.VITE_API_URL || "http://127.0.0.1:8000").replace(/\/$/, "")}/grievances/`;
-
-/**
- * Submit a new grievance as multipart/form-data, including an optional photo.
- * Django REST Framework TokenAuthentication requires: Authorization: Token <token>
- */
 export async function postGrievance(formData) {
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    const error = new Error("Please log in before submitting a grievance.");
-    error.status = 401;
-    throw error;
-  }
-
-  const response = await axios.post(GRIEVANCE_POST_URL, formData, {
-    headers: { Authorization: `Token ${token}` },
-    // Do not manually specify Content-Type: axios/browser adds multipart boundary.
-    timeout: 30000,
-  });
-
-  return response.data;
+  return (await api.post("grievances/", formData)).data;
 }
 
 /** Produce a useful error from DRF validation errors and HTTP failures. */

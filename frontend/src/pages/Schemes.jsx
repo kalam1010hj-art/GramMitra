@@ -24,15 +24,9 @@ let [schemesData,SetSchemeData] = useState([])
 let [isLoading,SetLoading] = useState(true)
 let [error,setError] = useState(null)
 let[filtered,SetFilter] = useState("ALL")
-let filteredSchemeData = []
-console.log("Schemes rendered and category selected is: ",filtered)
-console.log("filtered_data",filteredSchemeData)
-if(filtered === "ALL"){
-  filteredSchemeData = schemesData
-  console.log("filtered_data",filteredSchemeData)
-}else{
-  filteredSchemeData = schemesData.filter((scheme)=>scheme.category == filtered)
-}
+const [search,setSearch]=useState("");
+const filteredSchemeData=schemesData.filter(row=>(filtered==="ALL" || row.category===filtered) &&
+  (row.name+" "+row.description).toLowerCase().includes(search.trim().toLowerCase()));
 
 const errorMessages = {
     400: {
@@ -120,7 +114,6 @@ if (error) {
     };
 
     const ErrorIcon = errorContent.icon;
-console.log("Filtered Data:",filtered)
     return (
       <main className={styles.page}>
         <div className={styles.container}>
@@ -238,7 +231,7 @@ return ( <main className={styles.page}>
       
     </div>
 
-  <div className={styles.filterContainer}>
+  <label>Search schemes <input type="search" value={search} onChange={e=>setSearch(e.target.value)}/></label><div className={styles.filterContainer}>
 
   <div className={styles.filterLabel}>
     <SlidersHorizontal size={18} />

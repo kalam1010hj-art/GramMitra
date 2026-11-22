@@ -1,3 +1,4 @@
+import PrivateAttachment from "../components/PrivateAttachment";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -283,7 +284,7 @@ export default function GrievanceDetails() {
   const currentStatus =
     apiStatus === "PENDING" && assignedTo ? "ASSIGNED" : apiStatus;
   const status = STATUS[currentStatus] ?? STATUS.PENDING;
-  const complaintId = `GM-${String(grievance.id).padStart(4, "0")}`;
+  const complaintId = `GM-${String(grievance.id).padStart(6, "0")}`;
   const category = CATEGORY_LABELS[grievance.category] ?? grievance.category ?? "Other";
 
 
@@ -296,7 +297,7 @@ export default function GrievanceDetails() {
       date: grievance.created_at,
       submitted: true,
     },
-    ...(Array.isArray(grievance.updates) ? grievance.updates : []).map((update) => ({
+    ...(Array.isArray(grievance.updates) ? grievance.updates : []).filter(update => update.message !== "Grievance submitted.").map((update) => ({
       id: update.id,
       title: update.new_status || "Status updated",
       message: update.message || "The grievance status was updated.",
@@ -304,7 +305,7 @@ export default function GrievanceDetails() {
       date: update.created_at,
       submitted: false,
     })),
-  ].sort((a, b) => new Date(b.date) - new Date(a.date));
+  ].sort((a, b) => new Date(a.date) - new Date(b.date));
 
   async function copyId() {
     try {
@@ -432,10 +433,7 @@ export default function GrievanceDetails() {
               <div className={styles.detailBlock}>
                 <span className={styles.blockLabel}>Supporting photo</span>
                 {grievance.image ? (
-                  <a href={grievance.image} target="_blank" rel="noreferrer" className={styles.attachmentLink}>
-                    <img src={grievance.image} alt="Photo attached to grievance" />
-                    <span>View attached image</span>
-                  </a>
+                  <PrivateAttachment path={grievance.image} className={styles.attachmentLink}/>
                 ) : (
                   <div className={styles.noPhoto}><FileImage size={20} /> No photo attached to this complaint</div>
                 )}

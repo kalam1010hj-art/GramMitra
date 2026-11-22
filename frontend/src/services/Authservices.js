@@ -1,39 +1,13 @@
-import axios from "axios";
+import { api } from "./client";
 
-const URL = import.meta.env.VITE_API_URL
-
-function login(formData){
-    
-
-    return axios.post(`${URL}accounts/login`,
-        {
-            username:formData.username,
-            password:formData.password
-        }
-    )
-}export default login;
-
-export function register(formData){
-    return axios.post(`${URL}accounts/register`,formData)
-}
-
-
-
-
-export const updateProfile = async (formData) => {
-  const token = localStorage.getItem("token");
-
-  const response = await axios.patch(
-    `${URL}accounts/profileEditnp`,
-    formData,
-    {   
-      headers: {
-        ...(token && {
-          Authorization: `Token ${token}`,
-        }),
-      },
-    }
+export default function login({ username, password }) {
+  const name = username.trim();
+  return api.post(
+    "accounts/login",
+    /^\+?\d{10,15}$/.test(name)
+      ? { phone: name, password }
+      : { username: name, password },
   );
-
-  return response;
-};
+}
+export const register = (data) => api.post("accounts/register", data);
+export const updateProfile = (data) => api.patch("accounts/profileEdit", data);
